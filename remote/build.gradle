@@ -1,0 +1,57 @@
+//apply plugin: 'java-library'
+//
+//dependencies {
+//    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//}
+//
+//sourceCompatibility = "1.7"
+//targetCompatibility = "1.7"
+//
+//sourceSets {
+//    main.java.srcDirs += 'src/main/kotlin'
+//    //mock.java.srcDirs += 'src/mock/kotlin'
+//    //prod.java.srcDirs += 'src/prod/kotlin'
+//    test.java.srcDirs += 'src/test/kotlin'
+//    //androidTestMock.java.srcDirs += 'src/androidTestMock/kotlin'
+//    //androidTestProd.java.srcDirs += 'src/androidTestProd/kotlin'
+//}
+
+apply plugin: 'kotlin'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+sourceSets {
+    main.java.srcDirs += 'src/main/kotlin'
+    //mock.java.srcDirs += 'src/mock/kotlin'
+    //prod.java.srcDirs += 'src/prod/kotlin'
+    test.java.srcDirs += 'src/test/kotlin'
+    //androidTestMock.java.srcDirs += 'src/androidTestMock/kotlin'
+    //androidTestProd.java.srcDirs += 'src/androidTestProd/kotlin'
+}
+
+dependencies {
+    def remoteDependencies = rootProject.ext.remoteDependencies
+    def remoteTestDependencies = rootProject.ext.remoteTestDependencies
+
+    implementation remoteDependencies.javaxAnnotation
+
+    implementation remoteDependencies.kotlin
+    implementation remoteDependencies.javaxInject
+    implementation remoteDependencies.rxKotlin
+    implementation remoteDependencies.gson
+    implementation 'com.squareup.moshi:moshi:1.4.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.3.0'
+    implementation remoteDependencies.okHttp
+    implementation remoteDependencies.okHttpLogger
+    implementation remoteDependencies.retrofit
+    implementation remoteDependencies.retrofitConverter
+    implementation remoteDependencies.retrofitAdapter
+
+    testImplementation remoteTestDependencies.junit
+    testImplementation remoteTestDependencies.kotlinJUnit
+    testImplementation remoteTestDependencies.mockito
+    testImplementation remoteTestDependencies.assertj
+
+    compile project(':data')
+}

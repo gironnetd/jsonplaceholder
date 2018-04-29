@@ -1,0 +1,75 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+//    compileSdkVersion 27
+//
+//    defaultConfig {
+//        minSdkVersion 15
+//        targetSdkVersion 27
+//        versionCode 1
+//        versionName "1.0"
+//
+//        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+//    }
+
+    def globalConfiguration = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion globalConfiguration["androidCompileSdkVersion"]
+    buildToolsVersion globalConfiguration["androidBuildToolsVersion"]
+
+    defaultConfig {
+        minSdkVersion globalConfiguration["androidMinSdkVersion"]
+        targetSdkVersion globalConfiguration["androidTargetSdkVersion"]
+        multiDexEnabled = true
+    }
+
+    dexOptions {
+        preDexLibraries = false
+        dexInProcess = false
+        javaMaxHeapSize "4g"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        //mock.java.srcDirs += 'src/mock/kotlin'
+        //prod.java.srcDirs += 'src/prod/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+        //androidTestMock.java.srcDirs += 'src/androidTestMock/kotlin'
+        //androidTestProd.java.srcDirs += 'src/androidTestProd/kotlin'
+    }
+}
+
+dependencies {
+//    implementation fileTree(dir: 'libs', include: ['*.jar'])
+//
+//    implementation 'com.android.support:appcompat-v7:27.1.1'
+//    testImplementation 'junit:junit:4.12'
+//    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    def cacheDependencies = rootProject.ext.cacheDependencies
+    def cacheTestDependencies = rootProject.ext.cacheTestDependencies
+
+    compileOnly cacheDependencies.javaxAnnotation
+
+    implementation project(':data')
+
+    implementation cacheDependencies.kotlin
+    implementation cacheDependencies.javaxInject
+    implementation cacheDependencies.rxKotlin
+    implementation cacheDependencies.gson
+
+    testImplementation cacheTestDependencies.junit
+    testImplementation cacheTestDependencies.kotlinJUnit
+    testImplementation cacheTestDependencies.mockito
+    testImplementation cacheTestDependencies.assertj
+    testImplementation cacheTestDependencies.robolectric
+}

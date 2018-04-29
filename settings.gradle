@@ -1,0 +1,2 @@
+//include ':data2'
+include /*':app',*/ ':mobile-ui', ':cache', ':domain', ':data', ':presentation', ':remote'
