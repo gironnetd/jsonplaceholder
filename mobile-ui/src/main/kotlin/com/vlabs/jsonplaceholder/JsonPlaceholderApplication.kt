@@ -14,9 +14,6 @@ class JsonPlaceholderApplication : Application(), HasActivityInjector {
 
     @Inject lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
-
-
-
     override fun onCreate() {
         super.onCreate()
         DaggerApplicationComponent
@@ -26,6 +23,9 @@ class JsonPlaceholderApplication : Application(), HasActivityInjector {
                 .inject(this)
         setupTimber()
     }
+
+
+
 
     private fun setupTimber() {
         if (BuildConfig.DEBUG) {
