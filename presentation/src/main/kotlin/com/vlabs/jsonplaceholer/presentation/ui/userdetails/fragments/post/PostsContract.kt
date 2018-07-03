@@ -23,6 +23,9 @@ interface PostsContract {
     }
 
     interface Presenter : BasePresenter {
+
+        fun start(userId: Int)
+
         fun retrievePosts(userId: Int)
     }
 

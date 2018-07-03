@@ -24,6 +24,9 @@ interface AlbumsContract {
     }
 
     interface Presenter : BasePresenter {
+
+        fun start(userId: Int)
+
         fun retrieveAlbums(userId: Int)
     }
 }

@@ -23,6 +23,8 @@ interface TodosContract {
 
     interface Presenter : BasePresenter {
 
+        fun start(userId: Int)
+
         fun retrieveTodos(userId: Int)
     }
 }

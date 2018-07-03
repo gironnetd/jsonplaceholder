@@ -14,8 +14,11 @@ import com.vlabs.jsonplaceholder.ui.userdetails.UserDetailsActivity
 import com.vlabs.jsonplaceholer.presentation.model.AlbumView
 import com.vlabs.jsonplaceholer.presentation.ui.userdetails.fragments.album.AlbumsContract
 import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerFragment
+import dagger.android.support.HasSupportFragmentInjector
 import kotlinx.android.synthetic.main.fragment_albums_list.view.*
 import kotlinx.android.synthetic.main.fragment_users_details.view.*
 import javax.inject.Inject
@@ -35,19 +38,19 @@ class AlbumFragment : Fragment(), AlbumsContract.View  {
     }
 
     override fun showErrorState() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun hideErrorState() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun showEmptyState() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun hideEmptyState() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun setPresenter(presenter: AlbumsContract.Presenter) {
@@ -56,27 +59,19 @@ class AlbumFragment : Fragment(), AlbumsContract.View  {
 
     override fun onStart() {
         super.onStart()
-    //    onboardingPresenter.start()
+        onboardingPresenter.start(userId)
     }
-
-    override fun onResume() {
-        super.onResume()
-    //    onboardingPresenter?.start()
-    }
-
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        onboardingPresenter.start()
-//    }
 
     @Inject lateinit var onboardingPresenter: AlbumsContract.Presenter
     @Inject lateinit var albumsAdapter: AlbumsAdapter
     @Inject lateinit var albumMapper: AlbumMapper
     lateinit var albums: List<AlbumView>
-//    override fun onAttach(context: Context?) {
-//        AndroidSupportInjection.inject(this)
-//        super.onAttach(context)
-//    }
+    var userId: Int = -1
+
+    override fun onAttach(context: Context?) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -84,12 +79,13 @@ class AlbumFragment : Fragment(), AlbumsContract.View  {
         //rootView.section_label.text = "Album fragment"
         rootView.recycler_albums.layoutManager = LinearLayoutManager(activity)
         //albumMapper = AlbumMapper
-        albumMapper = AlbumMapper()
-        albumsAdapter = AlbumsAdapter(context)
+        //albumMapper = AlbumMapper()
+        //albumsAdapter = AlbumsAdapter(context)
         rootView.recycler_albums.adapter = albumsAdapter
+        userId = arguments.getInt(ARG_SECTION_NUMBER, -1)
 
-        albumsAdapter.albums = albums.map { albumMapper.mapToViewModel(it) }
-        albumsAdapter.notifyDataSetChanged()
+        //albumsAdapter.albums = albums.map { albumMapper.mapToViewModel(it) }
+        //albumsAdapter.notifyDataSetChanged()
         //rootView.recycler_albums.adapter = albumsAdapter
         return rootView
     }
@@ -111,6 +107,15 @@ class AlbumFragment : Fragment(), AlbumsContract.View  {
             //args.putInt(ARG_SECTION_NUMBER, sectionNumber)
             fragment.arguments = args
             fragment.albums = albums
+            return fragment
+        }
+
+        fun newInstance(sectionNumber: Int): AlbumFragment {
+            val fragment = AlbumFragment()
+            val args = Bundle()
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber)
+            fragment.arguments = args
+            //fragment.albums = albums
             return fragment
         }
     }

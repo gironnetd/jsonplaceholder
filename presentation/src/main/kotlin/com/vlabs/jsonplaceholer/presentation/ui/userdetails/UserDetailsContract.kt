@@ -15,17 +15,17 @@ interface UserDetailsContract {
         fun hideProgress()
 
         //fun showUsers(users: List<UserView>)
-        fun showAlbums(albums: List<AlbumView>)
+        //fun showAlbums(albums: List<AlbumView>)
 
-        fun hideAlbums()
+        ///fun hideAlbums()
 
-        fun showPosts(posts: List<PostView>)
+        //fun showPosts(posts: List<PostView>)
 
-        fun hidePosts()
+        //fun hidePosts()
 
-        fun showTodos(todos: List<TodoView>)
+        //fun showTodos(todos: List<TodoView>)
 
-        fun hideTodos()
+        //fun hideTodos()
 
         fun showErrorState()
 
@@ -42,11 +42,11 @@ interface UserDetailsContract {
 
         fun start(userId: Int)
 
-        fun retrieveAlbums(userId: Int)
+        //fun retrieveAlbums(userId: Int)
 
-        fun retrievePosts(userId: Int)
+        //fun retrievePosts(userId: Int)
 
-        fun retrieveTodos(userId: Int)
+        //fun retrieveTodos(userId: Int)
 
     }
 

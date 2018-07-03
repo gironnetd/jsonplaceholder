@@ -19,40 +19,40 @@ import javax.inject.Inject
 
 class UsersDetailsPresenter
 @Inject constructor(val viewList: UserDetailsContract.View
-                    , val getAlbumsByUserIdUseCase: SingleUseCase<List<Album>, GetAlbumsByUserId.Params>
+                    /*, val getAlbumsByUserIdUseCase: SingleUseCase<List<Album>, GetAlbumsByUserId.Params>
                     , val albumMapper: AlbumMapper
                     , val getPostsByUserIdUseCase: SingleUseCase<List<Post>, GetPostsByUserId.Params>
                     , val postMapper: PostMapper
                     , val getTodosByUserIdUseCase: SingleUseCase<List<Todo>, GetTodosByUserId.Params>
-                    , val todoMapper: TodoMapper):
+                    , val todoMapper: TodoMapper*/):
         UserDetailsContract.Presenter  {
 
 
     override fun start(userId: Int) {
-        retrieveAlbums(userId)
-        retrievePosts(userId)
-        retrieveTodos(userId)
+        //retrieveAlbums(userId)
+        //retrievePosts(userId)
+        //retrieveTodos(userId)
     }
 
     init {
         viewList.setPresenter(this)
     }
 
-    lateinit var albums: List<AlbumView>
+    //lateinit var albums: List<AlbumView>
     lateinit var posts: List<PostView>
     lateinit var todos: List<TodoView>
 
-    override fun retrieveAlbums(userId: Int) {
-        getAlbumsByUserIdUseCase.execute(AlbumSubscriber(), GetAlbumsByUserId.Params.forAlbums(userId))
-    }
+//    override fun retrieveAlbums(userId: Int) {
+//        getAlbumsByUserIdUseCase.execute(AlbumSubscriber(), GetAlbumsByUserId.Params.forAlbums(userId))
+//    }
 
-    override fun retrievePosts(userId: Int) {
-        getPostsByUserIdUseCase.execute(PostSubscriber(), GetPostsByUserId.Params.forPosts(userId))
-    }
-
-    override fun retrieveTodos(userId: Int) {
-        getTodosByUserIdUseCase.execute(TodoSubscriber(), GetTodosByUserId.Params.forTodos(userId))
-    }
+//    override fun retrievePosts(userId: Int) {
+//      //  getPostsByUserIdUseCase.execute(PostSubscriber(), GetPostsByUserId.Params.forPosts(userId))
+//    }
+//
+//    override fun retrieveTodos(userId: Int) {
+//      //  getTodosByUserIdUseCase.execute(TodoSubscriber(), GetTodosByUserId.Params.forTodos(userId))
+//    }
 
 
 
@@ -61,82 +61,82 @@ class UsersDetailsPresenter
     }
 
     override fun stop() {
-        getAlbumsByUserIdUseCase.dispose()
-        getPostsByUserIdUseCase.dispose()
-        getTodosByUserIdUseCase.dispose()
+        //getAlbumsByUserIdUseCase.dispose()
+        //getPostsByUserIdUseCase.dispose()
+        //getTodosByUserIdUseCase.dispose()
     }
 
-    internal fun handleGetAlbumsSuccess(albums: List<Album>) {
-        viewList.hideErrorState()
-        if (albums.isNotEmpty()) {
-            viewList.hideEmptyState()
-            viewList.showAlbums(albums.map { albumMapper.mapToView(it) })
-        } else {
-            viewList.hideAlbums()
-            viewList.showEmptyState()
-        }
-    }
+//    internal fun handleGetAlbumsSuccess(albums: List<Album>) {
+//        viewList.hideErrorState()
+//        if (albums.isNotEmpty()) {
+//            viewList.hideEmptyState()
+//            viewList.showAlbums(albums.map { albumMapper.mapToView(it) })
+//        } else {
+//            viewList.hideAlbums()
+//            viewList.showEmptyState()
+//        }
+//    }
+//
+//    inner class AlbumSubscriber: DisposableSingleObserver<List<Album>>() {
+//
+//        override fun onSuccess(albums: List<Album>) {
+//            handleGetAlbumsSuccess(albums)
+//        }
+//
+//        override fun onError(exception: Throwable) {
+//            //viewList.hideUsers()
+//            viewList.hideEmptyState()
+//            viewList.showErrorState()
+//        }
+//
+//    }
 
-    inner class AlbumSubscriber: DisposableSingleObserver<List<Album>>() {
-
-        override fun onSuccess(albums: List<Album>) {
-            handleGetAlbumsSuccess(albums)
-        }
-
-        override fun onError(exception: Throwable) {
-            //viewList.hideUsers()
-            viewList.hideEmptyState()
-            viewList.showErrorState()
-        }
-
-    }
-
-    internal fun handleGetPostsSuccess(posts: List<Post>) {
-        viewList.hideErrorState()
-        if (posts.isNotEmpty()) {
-            viewList.hideEmptyState()
-            viewList.showPosts(posts.map { postMapper.mapToView(it) })
-        } else {
-            viewList.hidePosts()
-            viewList.showEmptyState()
-        }
-    }
-
-    inner class PostSubscriber: DisposableSingleObserver<List<Post>>() {
-
-        override fun onSuccess(posts: List<Post>) {
-            handleGetPostsSuccess(posts)
-        }
-
-        override fun onError(exception: Throwable) {
-            //viewList.hideUsers()
-            viewList.hideEmptyState()
-            viewList.showErrorState()
-        }
-    }
-
-    internal fun handleGetTodosSuccess(todos: List<Todo>) {
-        viewList.hideErrorState()
-        if (todos.isNotEmpty()) {
-            viewList.hideEmptyState()
-            viewList.showTodos(todos.map { todoMapper.mapToView(it) })
-        } else {
-            viewList.hideTodos()
-            viewList.showEmptyState()
-        }
-    }
-
-    inner class TodoSubscriber: DisposableSingleObserver<List<Todo>>() {
-
-        override fun onSuccess(todos: List<Todo>) {
-            handleGetTodosSuccess(todos)
-        }
-
-        override fun onError(exception: Throwable) {
-            //viewList.hideUsers()
-            viewList.hideEmptyState()
-            viewList.showErrorState()
-        }
-
-    }
+//    internal fun handleGetPostsSuccess(posts: List<Post>) {
+//        viewList.hideErrorState()
+//        if (posts.isNotEmpty()) {
+//            viewList.hideEmptyState()
+//            viewList.showPosts(posts.map { postMapper.mapToView(it) })
+//        } else {
+//            viewList.hidePosts()
+//            viewList.showEmptyState()
+//        }
+//    }
+//
+//    inner class PostSubscriber: DisposableSingleObserver<List<Post>>() {
+//
+//        override fun onSuccess(posts: List<Post>) {
+//            handleGetPostsSuccess(posts)
+//        }
+//
+//        override fun onError(exception: Throwable) {
+//            //viewList.hideUsers()
+//            viewList.hideEmptyState()
+//            viewList.showErrorState()
+//        }
+//    }
+//
+//    internal fun handleGetTodosSuccess(todos: List<Todo>) {
+//        viewList.hideErrorState()
+//        if (todos.isNotEmpty()) {
+//            viewList.hideEmptyState()
+//            viewList.showTodos(todos.map { todoMapper.mapToView(it) })
+//        } else {
+//            viewList.hideTodos()
+//            viewList.showEmptyState()
+//        }
+//    }
+//
+//    inner class TodoSubscriber: DisposableSingleObserver<List<Todo>>() {
+//
+//        override fun onSuccess(todos: List<Todo>) {
+//            handleGetTodosSuccess(todos)
+//        }
+//
+//        override fun onError(exception: Throwable) {
+//            //viewList.hideUsers()
+//            viewList.hideEmptyState()
+//            viewList.showErrorState()
+//        }
+//
+//    }
 }

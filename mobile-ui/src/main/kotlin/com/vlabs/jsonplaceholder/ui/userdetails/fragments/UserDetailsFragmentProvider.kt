@@ -2,6 +2,10 @@ package com.vlabs.jsonplaceholder.ui.userdetails.fragments
 
 import com.vlabs.jsonplaceholder.ui.userdetails.fragments.album.AlbumFragment
 import com.vlabs.jsonplaceholder.ui.userdetails.fragments.album.AlbumFragmentModule
+import com.vlabs.jsonplaceholder.ui.userdetails.fragments.post.PostFragment
+import com.vlabs.jsonplaceholder.ui.userdetails.fragments.post.PostFragmentModule
+import com.vlabs.jsonplaceholder.ui.userdetails.fragments.todo.TodoFragment
+import com.vlabs.jsonplaceholder.ui.userdetails.fragments.todo.TodoFragmentModule
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -16,15 +20,9 @@ abstract class UserDetailsFragmentProvider {
     @ContributesAndroidInjector(modules = arrayOf(AlbumFragmentModule::class))
     internal abstract fun provideAlbumFragment(): AlbumFragment
 
-    //    @ContributesAndroidInjector(modules = MovementsFragmentModule.class)
-    //    abstract MovementsFragment provideMovementsFragment();
-    //
-    //    @ContributesAndroidInjector(modules = NotificationsFragmentModule.class)
-    //    abstract NotificationsFragment provideNotificationsFragment();
-    //
-    //    @ContributesAndroidInjector(modules = TipsFragmentModule.class)
-    //    abstract TipsFragment provideTipsFragment();
-    //
-    //    @ContributesAndroidInjector(modules = TypefacesFragmentModule.class)
-    //    abstract TypefacesFragment provideTypefacesFragment();
+    @ContributesAndroidInjector(modules = arrayOf(PostFragmentModule::class))
+    internal abstract fun providePostFragment(): PostFragment
+
+    @ContributesAndroidInjector(modules = arrayOf(TodoFragmentModule::class))
+    internal abstract fun provideTodoFragment(): TodoFragment
 }

@@ -21,9 +21,12 @@ class AlbumsPresenter @Inject constructor(val viewList: AlbumsContract.View
         getAlbumsByUserIdUseCase.execute(AlbumSubscriber(), GetAlbumsByUserId.Params.forAlbums(userId))
     }
 
+    override fun start(userId: Int) {
+        retrieveAlbums(userId)
+    }
 
     override fun start() {
-        retrieveAlbums(1)
+       // retrieveAlbums(userId)
     }
 
     override fun stop() {

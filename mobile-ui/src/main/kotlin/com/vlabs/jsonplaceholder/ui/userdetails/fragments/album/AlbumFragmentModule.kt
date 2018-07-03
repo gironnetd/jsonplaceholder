@@ -1,6 +1,7 @@
 package com.vlabs.jsonplaceholder.ui.userdetails.fragments.album
 
 import com.vlabs.jsonplaceholder.domain.interactors.albums.GetAlbumsByUserId
+import com.vlabs.jsonplaceholder.injection.scopes.PerActivity
 import com.vlabs.jsonplaceholder.injection.scopes.PerFragment
 import com.vlabs.jsonplaceholer.presentation.mapper.albums.AlbumMapper
 import com.vlabs.jsonplaceholer.presentation.ui.userdetails.fragments.album.AlbumsContract
@@ -29,13 +30,4 @@ class AlbumFragmentModule {
             AlbumsContract.Presenter {
         return AlbumsPresenter(mainView, getAlbumsByUserId, albumMapper)
     }
-
-}//    @Provides
-//    MailContract.View provideAuthorsFragment(MailFragment mailFragment){
-//        return mailFragment;
-//    }
-//
-//    @Provides
-//    MailContract.Presenter provideAuthorsPresenter(MailPresenter mailPresenter) {
-//        return  mailPresenter;
-//    }
+}

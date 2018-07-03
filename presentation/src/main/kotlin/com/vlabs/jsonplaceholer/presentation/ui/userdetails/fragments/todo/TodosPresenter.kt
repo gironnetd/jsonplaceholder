@@ -15,6 +15,8 @@ import javax.inject.Inject
 class TodosPresenter @Inject constructor(val viewList: TodosContract.View
                                          , val getTodosByUserIdUseCase: SingleUseCase<List<Todo>, GetTodosByUserId.Params>, val todoMapper: TodoMapper): TodosContract.Presenter {
 
+
+
     init {
         viewList.setPresenter(this)
     }
@@ -23,8 +25,12 @@ class TodosPresenter @Inject constructor(val viewList: TodosContract.View
         getTodosByUserIdUseCase.execute(TodoSubscriber(), GetTodosByUserId.Params.forTodos(userId))
     }
 
+    override fun start(userId: Int) {
+        retrieveTodos(userId)
+
+    }
+
     override fun start() {
-        retrieveTodos(1)
     }
 
     override fun stop() {

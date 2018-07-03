@@ -26,38 +26,46 @@ import com.vlabs.jsonplaceholer.presentation.model.PostView
 import com.vlabs.jsonplaceholer.presentation.model.TodoView
 import com.vlabs.jsonplaceholer.presentation.ui.userdetails.UserDetailsContract
 import dagger.android.AndroidInjection
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.HasSupportFragmentInjector
 
 import kotlinx.android.synthetic.main.activity_users_details.*
 import kotlinx.android.synthetic.main.fragment_users_details.view.*
 import javax.inject.Inject
 
-class UserDetailsActivity : AppCompatActivity(), UserDetailsContract.View {
+class UserDetailsActivity : AppCompatActivity(), HasSupportFragmentInjector, UserDetailsContract.View {
 
 
     @Inject lateinit var onboardingPresenter: UserDetailsContract.Presenter
-    @Inject lateinit var albumsAdapter: AlbumsAdapter
-    @Inject lateinit var albumMapper: AlbumMapper
-    @Inject lateinit var postsAdapter: PostsAdapter
-    @Inject lateinit var postMapper: PostMapper
-    @Inject lateinit var todosAdapter: TodosAdapter
-    @Inject lateinit var todoMapper: TodoMapper
+//    @Inject lateinit var albumsAdapter: AlbumsAdapter
+//    @Inject lateinit var albumMapper: AlbumMapper
+//    @Inject lateinit var postsAdapter: PostsAdapter
+//    @Inject lateinit var postMapper: PostMapper
+//    @Inject lateinit var todosAdapter: TodosAdapter
+//    @Inject lateinit var todoMapper: TodoMapper
 
     var userId: Int = -1
-    var albums: List<AlbumView>? = null
-    var posts: List<PostView>? = null
-    var todos: List<TodoView>? = null
+    //var albums: List<AlbumView>? = null
+    //var posts: List<PostView>? = null
+    //var todos: List<TodoView>? = null
+    @Inject lateinit var fragmentDispatchingAndroidInjector: DispatchingAndroidInjector<Fragment>
 
-    override fun hideAlbums() {
-        //recycler_albums.visibility = View.VISIBLE
+    override fun supportFragmentInjector(): AndroidInjector<Fragment>? {
+        return fragmentDispatchingAndroidInjector
     }
 
-    override fun hidePosts() {
-        //recycler_posts.visibility = View.VISIBLE
-    }
+//    override fun hideAlbums() {
+//        //recycler_albums.visibility = View.VISIBLE
+//    }
 
-    override fun hideTodos() {
-        //recycler_todos.visibility = View.VISIBLE
-    }
+//    override fun hidePosts() {
+//        //recycler_posts.visibility = View.VISIBLE
+//    }
+//
+//    override fun hideTodos() {
+//        //recycler_todos.visibility = View.VISIBLE
+//    }
 
     override fun hideProgress() {
     }
@@ -65,36 +73,36 @@ class UserDetailsActivity : AppCompatActivity(), UserDetailsContract.View {
     override fun showProgress() {
     }
 
-    override fun showAlbums(albums: List<AlbumView>) {
-        //albumsAdapter.albums = albums.map { albumMapper.mapToViewModel(it) }
-        //albumsAdapter.notifyDataSetChanged()
-        //recycler_albums.visibility = View.VISIBLE
-        this.albums = albums
-        isAllInit()
-    }
+//    override fun showAlbums(albums: List<AlbumView>) {
+//        //albumsAdapter.albums = albums.map { albumMapper.mapToViewModel(it) }
+//        //albumsAdapter.notifyDataSetChanged()
+//        //recycler_albums.visibility = View.VISIBLE
+//        this.albums = albums
+//        isAllInit()
+//    }
 
-    override fun showPosts(posts: List<PostView>) {
-        //postsAdapter.posts = posts.map { postMapper.mapToViewModel(it) }
-        //postsAdapter.notifyDataSetChanged()
-        //recycler_posts.visibility = View.VISIBLE
-        this.posts = posts
-        isAllInit()
-    }
+//    override fun showPosts(posts: List<PostView>) {
+//        //postsAdapter.posts = posts.map { postMapper.mapToViewModel(it) }
+//        //postsAdapter.notifyDataSetChanged()
+//        //recycler_posts.visibility = View.VISIBLE
+//        this.posts = posts
+//        isAllInit()
+//    }
+//
+//    override fun showTodos(todos: List<TodoView>) {
+//        //todosAdapter.todos = todos.map { todoMapper.mapToViewModel(it) }
+//        //todosAdapter.notifyDataSetChanged()
+//        //recycler_todos.visibility = View.VISIBLE
+//        this.todos = todos
+//        isAllInit()
+//    }
 
-    override fun showTodos(todos: List<TodoView>) {
-        //todosAdapter.todos = todos.map { todoMapper.mapToViewModel(it) }
-        //todosAdapter.notifyDataSetChanged()
-        //recycler_todos.visibility = View.VISIBLE
-        this.todos = todos
-        isAllInit()
-    }
-
-    fun isAllInit() {
-        if(albums != null && albums!!.isNotEmpty() && posts != null && posts!!.isNotEmpty() && todos != null && todos!!.isNotEmpty()) {
-            mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
-            container.adapter = mSectionsPagerAdapter
-        }
-    }
+//    fun isAllInit() {
+//        if(/*albums != null && albums!!.isNotEmpty() &&*/ posts != null && posts!!.isNotEmpty() && todos != null && todos!!.isNotEmpty()) {
+////            mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
+////            container.adapter = mSectionsPagerAdapter
+//        }
+//    }
 
     override fun showErrorState() {
     }
@@ -135,7 +143,7 @@ class UserDetailsActivity : AppCompatActivity(), UserDetailsContract.View {
         setSupportActionBar(toolbar)
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        //mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
+        mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
 
         // Set up the ViewPager with the sections adapter.
         container.adapter = mSectionsPagerAdapter
@@ -175,9 +183,9 @@ class UserDetailsActivity : AppCompatActivity(), UserDetailsContract.View {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
             when(position) {
-                0 -> return AlbumFragment.newInstance(albums!!)
-                1 -> return PostFragment.newInstance(posts!!)
-                2 -> return TodoFragment.newInstance(todos!!)
+                0 -> return AlbumFragment.newInstance(userId)
+                1 -> return PostFragment.newInstance(userId)
+                2 -> return TodoFragment.newInstance(userId)
                 else -> return PlaceholderFragment.newInstance(position + 1)
             }
         }

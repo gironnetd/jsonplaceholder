@@ -48,7 +48,7 @@ import dagger.Provides
  * Module used to provide dependencies at an activity-level.
  */
 @Module
-open class BrowseActivityModule {
+open class ActivityModule {
 
     @PerActivity
     @Provides
@@ -59,8 +59,7 @@ open class BrowseActivityModule {
     @PerActivity
     @Provides
     internal fun provideBrowsePresenter(mainView: UsersListContract.View,
-                                        getUsers: GetUsers, mapper: UserMapper):
-            UsersListContract.Presenter {
+                                        getUsers: GetUsers, mapper: UserMapper): UsersListContract.Presenter {
         return UsersListPresenter(mainView, getUsers, mapper)
     }
 
@@ -92,20 +91,6 @@ open class BrowseActivityModule {
         return CommentsPresenter(mainView, getCommentsByPostId, mapper)
     }
 
-//    @PerActivity
-//    @Provides
-//    internal fun provideBrowsePostsView(browsePostsActivity: BrowsePostsActivity): BrowsePostsContract.View {
-//        return browsePostsActivity
-//    }
-//
-//    @PerActivity
-//    @Provides
-//    internal fun provideBrowsePostsPresenter(mainView: BrowsePostsContract.View,
-//                                        getPosts: GetPosts, mapper: PostMapper):
-//            BrowsePostsContract.Presenter {
-//        return BrowsePostsPresenter(mainView, getPosts, mapper)
-//    }
-
     @PerActivity
     @Provides
     internal fun provideUserDetailsView(userDetailsActivity: UserDetailsActivity): UserDetailsContract.View {
@@ -114,57 +99,7 @@ open class BrowseActivityModule {
 
     @PerActivity
     @Provides
-    internal fun provideUserDetailsPresenter(mainView: UserDetailsContract.View,
-                                             getAlbumsByUserId: GetAlbumsByUserId
-                                             ,albumMapper: AlbumMapper
-                                             , getPostsByUserId: GetPostsByUserId
-                                             , postMapper: PostMapper
-                                             , getTodosByUserId: GetTodosByUserId
-                                             , todoMapper: TodoMapper):
-            UserDetailsContract.Presenter {
-        return UsersDetailsPresenter(mainView, getAlbumsByUserId, albumMapper,getPostsByUserId,postMapper,getTodosByUserId,todoMapper)
-    }
-
-//    @PerFragment
-//    @Provides
-//    internal fun provideAlbumsView(albumsFragment: AlbumFragment): AlbumsContract.View {
-//        return albumsFragment
-//    }
-//
-//    @PerFragment
-//    @Provides
-//    internal fun provideAlbumsPresenter(mainView: AlbumsContract.View,
-//                                             getAlbumsByUserId: GetAlbumsByUserId
-//                                             ,albumMapper: AlbumMapper):
-//            AlbumsContract.Presenter {
-//        return AlbumsPresenter(mainView, getAlbumsByUserId, albumMapper)
-//    }
-
-    @PerFragment
-    @Provides
-    internal fun providePostsView(postsFragment: PostFragment): PostsContract.View {
-        return postsFragment
-    }
-
-    @PerFragment
-    @Provides
-    internal fun providePostsPresenter(mainView: PostsContract.View,
-                                        getPostsByUserId: GetPostsByUserId
-                                        ,postMapper: PostMapper): PostsContract.Presenter {
-        return PostsPresenter(mainView, getPostsByUserId, postMapper)
-    }
-
-    @PerFragment
-    @Provides
-    internal fun provideTodosView(todosFragment: TodoFragment): TodosContract.View {
-        return todosFragment
-    }
-
-    @PerFragment
-    @Provides
-    internal fun provideTodosPresenter(mainView: TodosContract.View,
-                                       getTodosByUserId: GetTodosByUserId
-                                       ,todoMapper: TodoMapper): TodosContract.Presenter {
-        return TodosPresenter(mainView, getTodosByUserId, todoMapper)
+    internal fun provideUserDetailsPresenter(mainView: UserDetailsContract.View): UserDetailsContract.Presenter {
+        return UsersDetailsPresenter(mainView)
     }
 }

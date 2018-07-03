@@ -23,8 +23,12 @@ class PostsPresenter @Inject constructor(val viewList: PostsContract.View
         getPostsByUserIdUseCase.execute(PostSubscriber(), GetPostsByUserId.Params.forPosts(userId))
     }
 
+    override fun start(userId: Int) {
+        retrievePosts(userId)
+
+    }
+
     override fun start() {
-        retrievePosts(1)
     }
 
     override fun stop() {
